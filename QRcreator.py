@@ -8,4 +8,6 @@ if __name__ == "__main__":
     # url = pyqrcode.create('https://www.google.com')
     # url.png('qr.png')
     # url.show()
-    createQRpng('https://www.google.com','test')
+    # createQRpng('https://www.google.com','test')
+    json = 'network={\nssid="Participant WIFI NAME"\npsk="Participant WIFI PASSWORD"\nscan_ssid=1\nkey_mgmt=WPA-PSK}'
+    createQRpng(json,'json')

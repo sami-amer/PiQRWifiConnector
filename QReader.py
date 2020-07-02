@@ -2,15 +2,14 @@ from pyzbar import pyzbar
 import argparse
 import cv2
 
-ap = argparse.ArgumentParser()
-ap.add_argument("-i","--image", required= True, help="path to input image")
-args = vars(ap.parse_args())
+# ap = argparse.ArgumentParser()
+# ap.add_argument("-i","--image", required= True, help="path to input image")
+# args = vars(ap.parse_args())
 
-image = cv2.imread(args["image"])
-# image = cv2.imread('test.png')
+# image = cv2.imread(args["image"])
+image = cv2.imread('json.png')
 
 barcodes = pyzbar.decode(image)
-print(barcodes)
 
 for barcode in barcodes:
     ( x ,y ,w, h) = barcode.rect
