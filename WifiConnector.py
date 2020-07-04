@@ -20,9 +20,11 @@ def connectingLoop():
         barcodes = pyzbar.decode(frame)
         # loop over the detected barcodes
         result = None
+        barcodeFound = False
         for barcode in barcodes:
             # extract the bounding box location of the barcode and draw
             # the bounding box surrounding the barcode on the image
+            barcodeFound = True
             (x, y, w, h) = barcode.rect
             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
             # the barcode data is a bytes object so if we want to draw it
@@ -36,10 +38,17 @@ def connectingLoop():
             
             connectWifi(barcodeData)
             result = checkWifi()
-        if result is None or result[0] == 0:
-            continue
-        elif result[0] == 1:
-            break
+        if barcodeFound:
+            if result is None or result[0] == 0:
+                try:
+                    print(result[1])
+                except:
+                    print(result)
+                time.sleep(5)
+                continue
+            elif result[0] == 1:
+                print(result[1])
+                break
         
     # close the output CSV file do a bit of cleanup
     print("[INFO] cleaning up...")
@@ -54,13 +63,12 @@ def connectWifi(jsonString):
 
 
 def checkWifi():
-    # ps = subprocess.Popen(['iwconfig'], stdout = subprocess.PIPE,stderr = subprocess.STDOUT)
-    # try:
-    #     output = subprocess.check_output(('grep','ESSID'), stdin=ps.stdout)
-    #     return 1,"Wifi Connected to: " + str(output) # this only print if connected
-    # except subprocess.CalledProcessError:
-    #     return 0,'No Wireless Connection' # should run QR script here
-    return (0,'not connected')
+    ps = subprocess.Popen(['iwconfig'], stdout = subprocess.PIPE,stderr = subprocess.STDOUT)
+    try:
+        output = subprocess.check_output(('grep','ESSID'), stdin=ps.stdout)
+        return 1,"Wifi Connected to: " + str(output) # this only print if connected
+    except subprocess.CalledProcessError:
+        return 0,'No Wireless Connection' # should run QR script here
 
 if __name__ == "__main__":
     connectingLoop()
