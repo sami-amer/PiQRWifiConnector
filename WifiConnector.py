@@ -19,6 +19,7 @@ def connectingLoop():
         # find the barcodes in the frame and decode each of the barcodes
         barcodes = pyzbar.decode(frame)
         # loop over the detected barcodes
+        result = None
         for barcode in barcodes:
             # extract the bounding box location of the barcode and draw
             # the bounding box surrounding the barcode on the image
@@ -33,11 +34,13 @@ def connectingLoop():
             cv2.putText(frame, text, (x, y - 10),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
             
-            # TODO: insert code that checks the output of something that attempts to connect
             connectWifi(barcodeData)
             result = checkWifi()
-            print(result)
-        break
+        if result is None or result[0] == 0:
+            continue
+        elif result[0] == 1:
+            break
+        
     # close the output CSV file do a bit of cleanup
     print("[INFO] cleaning up...")
     cv2.destroyAllWindows()
