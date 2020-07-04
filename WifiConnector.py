@@ -58,7 +58,7 @@ def connectingLoop():
 def connectWifi(jsonString):
     with open('/etc/wpa_supplicant/wpa_supplicant.conf','a') as f:
         f.write(jsonString)
-    # with open('wpa_supplicant.txt','a') as f: # for debuggin purposes
+    # with open('wpa_supplicant.txt','a') as f: # for debuggin purposes, file must be created before hand
     #     f.write(jsonString)
 
 
