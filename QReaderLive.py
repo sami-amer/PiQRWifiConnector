@@ -6,19 +6,16 @@ import imutils
 import time
 import cv2
 
-ap = argparse.ArgumentParser()
-ap.add_argument("-o", "--output", type=str, default="barcodes.csv",
-	help="path to output CSV file containing barcodes")
-args = vars(ap.parse_args())
+# ap = argparse.ArgumentParser()
+# ap.add_argument("-o", "--output", type=str, default="barcodes.csv",
+# 	help="path to output CSV file containing barcodes")
+# args = vars(ap.parse_args())
 
 print("[INFO] starting video stream...")
-vs = VideoStream(src=0).start()
-# vs = VideoStream(usePiCamera=True).start()
+# vs = VideoStream(src=0).start() # for mac camera
+vs = VideoStream(usePiCamera=True).start() # for Pi camera
 time.sleep(2.0)
-# open the output CSV file for writing and initialize the set of
-# barcodes found thus far
-csv = open(args["output"], "w")
-found = set()
+
 while True:
 	# grab the frame from the threaded video stream and resize it to
 	# have a maximum width of 400 pixels
@@ -40,19 +37,10 @@ while True:
 		text = "{} ({})".format(barcodeData, barcodeType)
 		cv2.putText(frame, text, (x, y - 10),
 			cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
-		# if the barcode text is currently not in our CSV file, write
-		# the timestamp + barcode to disk and update the set
-		if barcodeData not in found:
-			csv.write("{},{}\n".format(datetime.datetime.now(),
-				barcodeData))
-			csv.flush()
-			found.add(barcodeData)
-	cv2.imshow("Barcode Scanner", frame)
-	key = cv2.waitKey(1) & 0xFF
+		
+		# TODO: insert code that checks the output of something that attempts to connect
+
  
-	# if the `q` key was pressed, break from the loop
-	if key == ord("q"):
-		break
 # close the output CSV file do a bit of cleanup
 print("[INFO] cleaning up...")
 csv.close()
