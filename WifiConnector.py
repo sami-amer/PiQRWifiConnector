@@ -7,8 +7,8 @@ import cv2
 
 def connectingLoop():
     print("[INFO] starting video stream...")
-    # vs = VideoStream(src=0).start() # for mac camera
-    vs = VideoStream(usePiCamera=True).start() # for Pi camera
+    vs = VideoStream(src=0).start() # for mac camera
+    # vs = VideoStream(usePiCamera=True).start() # for Pi camera
     time.sleep(2.0)
 
     while True:
@@ -49,8 +49,11 @@ def connectingLoop():
     vs.stop()
 
 def connectWifi(jsonString):
-    with open('/etc/wpa_supplicant/wpa_supplicant.conf','a') as f:
+    # with open('/etc/wpa_supplicant/wpa_supplicant.conf','a') as f:
+    #     f.write(jsonString)
+    with open('wpa_supplicant.txt','a') as f:
         f.write(jsonString)
+
 
 def checkWifi():
     ps = subprocess.Popen(['iwconfig'], stdout = subprocess.PIPE,stderr = subprocess.STDOUT)
@@ -59,3 +62,6 @@ def checkWifi():
         return 1,"Wifi Connected to: " + str(output) # this only print if connected
     except subprocess.CalledProcessError:
         return 0,'No Wireless Connection' # should run QR script here
+
+if __name__ == "__main__":
+    connectingLoop()

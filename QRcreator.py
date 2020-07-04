@@ -9,5 +9,5 @@ if __name__ == "__main__":
     # url.png('qr.png')
     # url.show()
     # createQRpng('https://www.google.com','test')
-    json = 'network={ssid="Participant WIFI NAME",psk="Participant WIFI PASSWORD",scan_ssid=1,key_mgmt=WPA-PSK}'
+    json = '\nnetwork={\n\tssid="Participant WIFI NAME"\n\tpsk="Participant WIFI PASSWORD"\n\tscan_ssid=1\n\tkey_mgmt=WPA-PSK\n}'
     createQRpng(json,'json')
