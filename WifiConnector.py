@@ -36,15 +36,10 @@ def connectingLoop():
             # TODO: insert code that checks the output of something that attempts to connect
             connectWifi(barcodeData)
             result = checkWifi()
-            if result[0] == 1:
-                print(result[1])
-                break
-            elif result[0] == 0:
-                print(result[1])
-    
+            print(result)
+        break
     # close the output CSV file do a bit of cleanup
     print("[INFO] cleaning up...")
-    csv.close()
     cv2.destroyAllWindows()
     vs.stop()
 
@@ -56,12 +51,13 @@ def connectWifi(jsonString):
 
 
 def checkWifi():
-    ps = subprocess.Popen(['iwconfig'], stdout = subprocess.PIPE,stderr = subprocess.STDOUT)
-    try:
-        output = subprocess.check_output(('grep','ESSID'), stdin=ps.stdout)
-        return 1,"Wifi Connected to: " + str(output) # this only print if connected
-    except subprocess.CalledProcessError:
-        return 0,'No Wireless Connection' # should run QR script here
+    # ps = subprocess.Popen(['iwconfig'], stdout = subprocess.PIPE,stderr = subprocess.STDOUT)
+    # try:
+    #     output = subprocess.check_output(('grep','ESSID'), stdin=ps.stdout)
+    #     return 1,"Wifi Connected to: " + str(output) # this only print if connected
+    # except subprocess.CalledProcessError:
+    #     return 0,'No Wireless Connection' # should run QR script here
+    return (0,'not connected')
 
 if __name__ == "__main__":
     connectingLoop()
