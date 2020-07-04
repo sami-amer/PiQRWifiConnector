@@ -7,8 +7,8 @@ import cv2
 
 def connectingLoop():
     print("[INFO] starting video stream...")
-    vs = VideoStream(src=0).start() # for mac camera
-    # vs = VideoStream(usePiCamera=True).start() # for Pi camera
+    # vs = VideoStream(src=0).start() # for mac camera
+    vs = VideoStream(usePiCamera=True).start() # for Pi camera
     time.sleep(2.0)
 
     while True:
@@ -56,10 +56,10 @@ def connectingLoop():
     vs.stop()
 
 def connectWifi(jsonString):
-    # with open('/etc/wpa_supplicant/wpa_supplicant.conf','a') as f:
-    #     f.write(jsonString)
-    with open('wpa_supplicant.txt','a') as f:
+    with open('/etc/wpa_supplicant/wpa_supplicant.conf','a') as f:
         f.write(jsonString)
+    # with open('wpa_supplicant.txt','a') as f: # for debuggin purposes
+    #     f.write(jsonString)
 
 
 def checkWifi():
