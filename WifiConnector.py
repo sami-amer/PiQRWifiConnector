@@ -55,9 +55,10 @@ def connectingLoop():
     cv2.destroyAllWindows()
     vs.stop()
 
-def connectWifi(jsonString):
+def connectWifi(json): # when you make the QR Code, make a json of whats supposed to be INSIDE the 'network'.
+    string  = '\nnetwork={\n\tssid="'+ str(json['ssid'])+'"\n\tpsk="'+str(json['psk']) +'"\n\tscan_ssid='+ str(json['scan_ssid']) +'\n\tkey_mgmt=' + str(json['key_mgmt']) + '\n}'
     with open('/etc/wpa_supplicant/wpa_supplicant.conf','a') as f:
-        f.write(jsonString)
+        f.write(string)
     # with open('wpa_supplicant.txt','a') as f: # for debuggin purposes, file must be created before hand
     #     f.write(jsonString)
 
@@ -72,3 +73,6 @@ def checkWifi():
 
 if __name__ == "__main__":
     connectingLoop()
+    # json = {'ssid':'Participant WIFI NAME', 'psk': 'Participant WIFI PASSWORD', 'scan_ssid':1, 'key_mgmt':'WPA-PSK'} 
+    # string  = '\nnetwork={\n\tssid="'+ str(json['ssid'])+'"\n\tpsk="'+str(json['psk']) +'"\n\tscan_ssid='+ str(json['scan_ssid']) +'\n\tkey_mgmt=' + str(json['key_mgmt']) + '\n}'
+    # print(string)
